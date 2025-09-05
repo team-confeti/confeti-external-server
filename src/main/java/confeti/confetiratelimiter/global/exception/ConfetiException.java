@@ -12,4 +12,9 @@ public class ConfetiException extends RuntimeException {
         super(errorCode.getMessage());
         this.errorCode = errorCode;
     }
+
+    public ConfetiException(ErrorCode errorCode, String reason) {
+        super(errorCode.getMessage() + ", " + reason);
+        this.errorCode = errorCode;
+    }
 }
