@@ -5,7 +5,8 @@ import org.springframework.cloud.openfeign.FeignClient;
 
 @FeignClient(
         name = "AppleMusicFeignClient",
-        url = "https://api.music.apple.com"
+        url = "${apple-music.api.host}",
+        path = "${apple-music.api.path}"
 )
 public interface AppleMusicFeignClient extends AppleMusicExternalClient {
 }

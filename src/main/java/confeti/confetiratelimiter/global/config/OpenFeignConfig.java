@@ -2,25 +2,36 @@ package confeti.confetiratelimiter.global.config;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import confeti.confetiratelimiter.global.exception.CustomErrorDecode;
+import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicTokenGenerator;
+import confeti.confetiratelimiter.global.interceptor.AppleMusicTokenRefreshInterceptor;
 import feign.Logger;
 import feign.Logger.Level;
+import feign.RequestInterceptor;
 import feign.codec.Decoder;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.optionals.OptionalDecoder;
 import lombok.RequiredArgsConstructor;
 import feign.okhttp.OkHttpClient;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@EnableFeignClients("confeti.confetiratelimiter.external.client")
 @RequiredArgsConstructor
 public class OpenFeignConfig {
 
+    private final AppleMusicTokenGenerator tokenGenerator;
+
     @Bean
     public ErrorDecoder errorDecoder() {
-        return new CustomErrorDecode();
+        return new AppleMusicTokenRefreshDecoder(tokenGenerator);
+    }
+
+    @Bean
+    public RequestInterceptor requestInterceptor() {
+        return new AppleMusicTokenRefreshInterceptor(tokenGenerator);
     }
 
     @Bean
