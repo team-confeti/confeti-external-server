@@ -13,14 +13,12 @@ import feign.jackson.JacksonDecoder;
 import feign.optionals.OptionalDecoder;
 import lombok.RequiredArgsConstructor;
 import feign.okhttp.OkHttpClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-@EnableFeignClients("confeti.confetiratelimiter.external.client")
 @RequiredArgsConstructor
-public class OpenFeignConfig {
+public class AppleMusicFeignConfig {
 
     private final AppleMusicTokenGenerator tokenGenerator;
 
