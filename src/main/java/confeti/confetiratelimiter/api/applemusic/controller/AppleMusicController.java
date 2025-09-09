@@ -1,6 +1,8 @@
 package confeti.confetiratelimiter.api.applemusic.controller;
 
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicService;
+import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
+import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
@@ -19,11 +21,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class AppleMusicController {
 
     private final AppleMusicService appleMusicService;
+    private final AppleMusicValidateService appleMusicValidateService;
 
     @GetMapping("/artists/{id}")
     public ResponseEntity<BaseResponse<?>> getArtistById(
             @PathVariable String id
     ) {
         return ApiResponseUtil.success(appleMusicService.getArtistById(id));
+    }
+
+    @GetMapping("/artists")
+    public ResponseEntity<BaseResponse<?>> getArtists(
+            @RequestParam String ids
+    ) {
+        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ARTISTS);
+        return ApiResponseUtil.success(appleMusicService.getArtistsByIds(ids));
     }
 }

@@ -23,4 +23,8 @@ public class AppleMusicService {
                         () -> new ConfetiException(ErrorCode.NOT_FOUND)
                 );
     }
+
+    public AppleMusicArtistsResponse getArtistsByIds(String ids) {
+        return client.getArtistsByIds(ids);
+    }
 }
