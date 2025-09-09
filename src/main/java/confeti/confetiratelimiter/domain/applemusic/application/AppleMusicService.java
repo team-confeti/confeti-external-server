@@ -1,7 +1,11 @@
 package confeti.confetiratelimiter.domain.applemusic.application;
 
 import confeti.confetiratelimiter.external.client.AppleMusicFeignClient;
+import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
+import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
+import confeti.confetiratelimiter.global.common.response.ErrorCode;
+import confeti.confetiratelimiter.global.exception.ConfetiException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,4 +14,13 @@ import org.springframework.stereotype.Service;
 public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
+
+    public AppleMusicArtistResponse getArtistById(String id) {
+        AppleMusicArtistsResponse appleMusicArtistsResponse = client.getArtistById(id);
+
+        return appleMusicArtistsResponse.data().stream().findFirst()
+                .orElseThrow(
+                        () -> new ConfetiException(ErrorCode.NOT_FOUND)
+                );
+    }
 }
