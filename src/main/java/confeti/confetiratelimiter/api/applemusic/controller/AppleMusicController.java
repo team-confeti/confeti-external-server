@@ -70,4 +70,16 @@ public class AppleMusicController {
         appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.SONGS);
         return ApiResponseUtil.success(appleMusicService.getSongsByIds(ids));
     }
+
+    @GetMapping("/search")
+    public ResponseEntity<BaseResponse<?>> searchByKeyword(
+            @RequestParam String term,
+            @RequestParam String types,
+            @RequestParam String limit,
+            @RequestParam(required = false) String offset,
+            @RequestParam(required = false) String with
+    ) {
+        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
+        return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
+    }
 }

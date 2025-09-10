@@ -46,4 +46,8 @@ public class AppleMusicService {
     public AppleMusicMusicsResponse getSongsByIds(String ids) {
         return client.getSongsByIds(ids);
     }
+
+    public AppleMusicSearchResponse searchByKeyword(String term, String types, String limit, String offset, String with) {
+        return client.searchByKeyword(term, types, limit, offset, with);
+    }
 }

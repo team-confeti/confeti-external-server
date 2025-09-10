@@ -82,7 +82,7 @@ public interface AppleMusicFeignClient {
      * limit: 5 ~ 25
      */
     @GetMapping("/search")
-    AppleMusicSearchResponse getArtistsByKeyword(
+    AppleMusicSearchResponse searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
             @RequestParam String limit,
