@@ -1,6 +1,7 @@
 package confeti.confetiratelimiter.domain.applemusic.application;
 
 import confeti.confetiratelimiter.external.client.AppleMusicFeignClient;
+import confeti.confetiratelimiter.external.client.dto.response.album.AppleMusicAlbumsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
@@ -35,5 +36,9 @@ public class AppleMusicService {
 
     public AppleMusicArtistMusicsResponse getArtistMusicsById(String id, String limit, String offset) {
         return client.getArtistMusicsById(id, limit, offset);
+    }
+
+    public AppleMusicAlbumsResponse getAlbumsByIds(String ids) {
+        return client.getAlbumsByIds(ids);
     }
 }

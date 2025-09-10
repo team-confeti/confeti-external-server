@@ -7,4 +7,5 @@ import lombok.NoArgsConstructor;
 public class AppleMusicFetchLimit {
 
     public static final int ARTISTS = 25;
+    public static final int ALBUMS = 100;
 }

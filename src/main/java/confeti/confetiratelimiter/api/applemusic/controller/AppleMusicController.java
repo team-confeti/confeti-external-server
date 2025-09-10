@@ -53,4 +53,12 @@ public class AppleMusicController {
     ) {
         return ApiResponseUtil.success(appleMusicService.getArtistMusicsById(id, limit, offset));
     }
+
+    @GetMapping("/albums")
+    public ResponseEntity<BaseResponse<?>> getAlbumsByIds(
+            @RequestParam String ids
+    ) {
+        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ALBUMS);
+        return ApiResponseUtil.success(appleMusicService.getAlbumsByIds(ids));
+    }
 }
