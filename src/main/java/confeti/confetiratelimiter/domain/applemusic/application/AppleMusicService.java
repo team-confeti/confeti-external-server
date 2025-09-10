@@ -4,6 +4,7 @@ import confeti.confetiratelimiter.external.client.AppleMusicFeignClient;
 import confeti.confetiratelimiter.external.client.dto.response.album.AppleMusicAlbumsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
@@ -49,5 +50,9 @@ public class AppleMusicService {
 
     public AppleMusicSearchResponse searchByKeyword(String term, String types, String limit, String offset, String with) {
         return client.searchByKeyword(term, types, limit, offset, with);
+    }
+
+    public AppleMusicChartsResponse getCharts(String types, String limit) {
+        return client.getCharts(types, limit);
     }
 }

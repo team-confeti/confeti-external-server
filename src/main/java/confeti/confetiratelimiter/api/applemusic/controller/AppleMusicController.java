@@ -82,4 +82,13 @@ public class AppleMusicController {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
         return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
     }
+
+    @GetMapping("/charts")
+    public ResponseEntity<BaseResponse<?>> getCharts(
+            @RequestParam String types,
+            @RequestParam String limit
+    ) {
+        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.CHARTS_MIN, AppleMusicFetchLimit.CHARTS_MAX);
+        return ApiResponseUtil.success(appleMusicService.getCharts(types, limit));
+    }
 }
