@@ -44,4 +44,13 @@ public class AppleMusicController {
     ) {
         return ApiResponseUtil.success(appleMusicService.getRelatedArtistsById(id, view, limit));
     }
+
+    @GetMapping("/artists/{id}/songs")
+    public ResponseEntity<BaseResponse<?>> getArtistMusicsById(
+            @PathVariable String id,
+            @RequestParam String limit,
+            @RequestParam String offset
+    ) {
+        return ApiResponseUtil.success(appleMusicService.getArtistMusicsById(id, limit, offset));
+    }
 }

@@ -3,6 +3,7 @@ package confeti.confetiratelimiter.domain.applemusic.application;
 import confeti.confetiratelimiter.external.client.AppleMusicFeignClient;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import confeti.confetiratelimiter.global.exception.ConfetiException;
@@ -30,5 +31,9 @@ public class AppleMusicService {
 
     public AppleMusicArtistsResponse getRelatedArtistsById(String id, String view, String limit) {
         return client.getRelatedArtistsById(id, view, limit);
+    }
+
+    public AppleMusicArtistMusicsResponse getArtistMusicsById(String id, String limit, String offset) {
+        return client.getArtistMusicsById(id, limit, offset);
     }
 }
