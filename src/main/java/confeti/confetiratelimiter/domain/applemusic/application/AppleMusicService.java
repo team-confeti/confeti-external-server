@@ -27,4 +27,8 @@ public class AppleMusicService {
     public AppleMusicArtistsResponse getArtistsByIds(String ids) {
         return client.getArtistsByIds(ids);
     }
+
+    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String view, String limit) {
+        return client.getRelatedArtistsById(id, view, limit);
+    }
 }

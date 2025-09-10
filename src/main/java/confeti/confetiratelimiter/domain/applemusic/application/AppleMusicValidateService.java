@@ -16,4 +16,16 @@ public class AppleMusicValidateService {
             throw new ConfetiException(ErrorCode.BAD_REQUEST);
         }
     }
+
+    public void validateLimit(String limit, int max) {
+        try {
+            int parsedLimit = Integer.parseInt(limit);
+
+            if (parsedLimit <= 0 || parsedLimit > max) {
+                throw new IllegalArgumentException();
+            }
+        } catch (Exception e) {
+            throw new ConfetiException(ErrorCode.BAD_REQUEST);
+        }
+    }
 }
