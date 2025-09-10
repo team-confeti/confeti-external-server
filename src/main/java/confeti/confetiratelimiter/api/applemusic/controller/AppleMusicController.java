@@ -3,6 +3,7 @@ package confeti.confetiratelimiter.api.applemusic.controller;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicService;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
+import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
 import confeti.confetiratelimiter.global.common.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
@@ -60,5 +61,13 @@ public class AppleMusicController {
     ) {
         appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ALBUMS);
         return ApiResponseUtil.success(appleMusicService.getAlbumsByIds(ids));
+    }
+
+    @GetMapping("/songs")
+    public ResponseEntity<BaseResponse<?>> getSongsByIds(
+            @RequestParam String ids
+    ) {
+        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.SONGS);
+        return ApiResponseUtil.success(appleMusicService.getSongsByIds(ids));
     }
 }

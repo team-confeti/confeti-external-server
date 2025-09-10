@@ -8,4 +8,5 @@ public class AppleMusicFetchLimit {
 
     public static final int ARTISTS = 25;
     public static final int ALBUMS = 100;
+    public static final int SONGS = 300;
 }
