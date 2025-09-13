@@ -41,7 +41,10 @@ dependencies {
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
 
     // Resilience4j
-    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.0.2'
+    implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'
+
+    // AOP
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'

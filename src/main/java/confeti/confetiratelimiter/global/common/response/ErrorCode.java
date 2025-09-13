@@ -32,6 +32,9 @@ public enum ErrorCode {
     CONFLICT(HttpStatus.CONFLICT, "이미 존재하는 리소스입니다."),
     TIMETABLE_FESTIVAL_IS_FULL(HttpStatus.CONFLICT, "더 이상 등록할 수 없습니다."),
 
+    /* 429 Too Many Request */
+    TOO_MANY_REQUEST(HttpStatus.TOO_MANY_REQUESTS, "설정된 값보다 너무 많은 요청을 보냈습니다."),
+
     /* 500 Internal Server Error*/
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
     ;

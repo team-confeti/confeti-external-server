@@ -6,6 +6,8 @@ import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
 import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
 import confeti.confetiratelimiter.global.common.response.BaseResponse;
+import confeti.confetiratelimiter.global.common.response.ErrorCode;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -72,6 +74,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/search")
+    @RateLimiter(name = "appleMusicService", fallbackMethod = "rateLimiterFallback")
     public ResponseEntity<BaseResponse<?>> searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
@@ -81,6 +84,16 @@ public class AppleMusicController {
     ) {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
         return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
+    }
+
+    public ResponseEntity<BaseResponse<?>> rateLimiterFallback(
+            String term,
+            String types,
+            String limit,
+            String offset,
+            String with,
+            Exception ex) {
+        return ApiResponseUtil.failure(ErrorCode.BAD_REQUEST);
     }
 
     @GetMapping("/charts")
