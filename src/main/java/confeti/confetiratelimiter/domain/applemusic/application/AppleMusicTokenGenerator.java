@@ -11,7 +11,8 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import lombok.Getter;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.concurrent.atomic.AtomicReference;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -36,19 +37,37 @@ public class AppleMusicTokenGenerator {
     @Value("${apple-music.credentials.expiration}")
     private Long expiration;
 
-    @Getter
-    private String accessToken;
+    private final AtomicReference<String> accessToken = new AtomicReference<>();
+    private final AtomicLong generatedTime = new AtomicLong(0);
 
     @PostConstruct
     private void init() {
         generateToken();
     }
 
-    public void refreshToken() {
-        generateToken();
+    public String getAccessToken() {
+        if (isTokenExpired()) {
+            refreshToken();
+        }
+
+        return accessToken.get();
     }
 
-    public void generateToken() {
+    private boolean isTokenExpired() {
+        return System.currentTimeMillis() - generatedTime.get() > (expiration - 30_000); // 30초의 여유를 두고 만료 여부 판단
+    }
+
+    public void refreshToken() {
+        synchronized (this) {
+            if (isTokenExpired()) {
+                generateToken();
+            }
+        }
+    }
+
+    private void generateToken() {
+        long nowTime = System.currentTimeMillis();
+        log.info("AppleMusicTokenGenerator.generateToken Token Expired. Try to generate token... Current Time : {}", nowTime);
         Date now = new Date();
 
         Map<String, Object> claims = new HashMap<>();
@@ -56,11 +75,14 @@ public class AppleMusicTokenGenerator {
         claims.put("iat", now);
         claims.put("exp", new Date(now.getTime() + expiration));
 
-        accessToken = Jwts.builder()
+        String generatedAccessToken = Jwts.builder()
                 .header().keyId(keyId).add("alg", "ES256").and()
                 .claims(claims)
                 .signWith(getPrivateKey())
                 .compact();
+
+        accessToken.set(generatedAccessToken);
+        generatedTime.set(nowTime);
     }
 
     private PrivateKey getPrivateKey() {
