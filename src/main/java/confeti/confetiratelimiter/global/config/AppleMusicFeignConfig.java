@@ -11,6 +11,7 @@ import feign.codec.Decoder;
 import feign.codec.ErrorDecoder;
 import feign.jackson.JacksonDecoder;
 import feign.optionals.OptionalDecoder;
+import java.time.Duration;
 import lombok.RequiredArgsConstructor;
 import feign.okhttp.OkHttpClient;
 import org.springframework.context.annotation.Bean;
@@ -55,6 +56,8 @@ public class AppleMusicFeignConfig {
     public OkHttpClient client() {
         return new OkHttpClient(
                 new okhttp3.OkHttpClient.Builder()
+                        .connectTimeout(Duration.ofSeconds(5))
+                        .callTimeout(Duration.ofSeconds(10)) // sync with rate limit timeout
                         .build()
         );
     }
