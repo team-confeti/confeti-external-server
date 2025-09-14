@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apple-music-api")
+@RateLimiter(name = "appleMusicService")
 public class AppleMusicController {
 
     private final AppleMusicService appleMusicService;
@@ -74,7 +75,6 @@ public class AppleMusicController {
     }
 
     @GetMapping("/search")
-    @RateLimiter(name = "appleMusicService", fallbackMethod = "rateLimiterFallback")
     public ResponseEntity<BaseResponse<?>> searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
@@ -84,16 +84,6 @@ public class AppleMusicController {
     ) {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
         return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
-    }
-
-    public ResponseEntity<BaseResponse<?>> rateLimiterFallback(
-            String term,
-            String types,
-            String limit,
-            String offset,
-            String with,
-            Exception ex) {
-        return ApiResponseUtil.failure(ErrorCode.BAD_REQUEST);
     }
 
     @GetMapping("/charts")
