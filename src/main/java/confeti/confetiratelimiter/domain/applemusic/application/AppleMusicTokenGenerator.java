@@ -3,6 +3,7 @@ package confeti.confetiratelimiter.domain.applemusic.application;
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import confeti.confetiratelimiter.global.exception.ConfetiException;
 import io.jsonwebtoken.Jwts;
+import jakarta.annotation.PostConstruct;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -37,6 +38,11 @@ public class AppleMusicTokenGenerator {
 
     @Getter
     private String accessToken;
+
+    @PostConstruct
+    private void init() {
+        generateToken();
+    }
 
     public void refreshToken() {
         generateToken();
