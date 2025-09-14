@@ -92,7 +92,7 @@ public class AppleMusicTokenGenerator {
             KeyFactory keyFactory = KeyFactory.getInstance(PRIVATE_KEY_ALGORITHM);
             return keyFactory.generatePrivate(keySpec);
         } catch (Exception e) {
-            log.debug(e.getMessage());
+            log.error("AppleMusicTokenGenerator.getPrivateKey Failed to generate key spec");
             throw new ConfetiException(ErrorCode.INTERNAL_SERVER_ERROR);
         }
     }
