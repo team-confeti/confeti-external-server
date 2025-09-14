@@ -10,11 +10,13 @@ import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicM
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import confeti.confetiratelimiter.global.exception.ConfetiException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
+@CircuitBreaker(name = "appleMusicService", fallbackMethod = "fallback")
 public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
@@ -54,5 +56,9 @@ public class AppleMusicService {
 
     public AppleMusicChartsResponse getCharts(String types, String limit) {
         return client.getCharts(types, limit);
+    }
+
+    public void fallback() {
+        throw new ConfetiException(ErrorCode.NOT_FOUND);
     }
 }
