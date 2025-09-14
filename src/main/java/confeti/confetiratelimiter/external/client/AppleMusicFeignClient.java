@@ -93,9 +93,6 @@ public interface AppleMusicFeignClient {
     /**
      * url: https://developer.apple.com/documentation/applemusicapi/charts
      * limit: 20 ~ 200
-     * @param types
-     * @param limit
-     * @return
      */
     @GetMapping("/charts")
     AppleMusicChartsResponse getCharts(
