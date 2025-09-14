@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-@CircuitBreaker(name = "appleMusicService", fallbackMethod = "fallback")
+@CircuitBreaker(name = "appleMusicService", fallbackMethod = "circuitBreakerFallback")
 public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
@@ -58,7 +58,7 @@ public class AppleMusicService {
         return client.getCharts(types, limit);
     }
 
-    public void fallback() {
-        throw new ConfetiException(ErrorCode.NOT_FOUND);
+    public void circuitBreakerFallback() {
+        throw new ConfetiException(ErrorCode.BAD_GATEWAY);
     }
 }

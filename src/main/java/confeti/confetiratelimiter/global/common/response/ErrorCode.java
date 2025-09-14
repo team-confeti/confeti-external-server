@@ -37,6 +37,7 @@ public enum ErrorCode {
 
     /* 500 Internal Server Error*/
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "서버 내부 오류입니다."),
+    BAD_GATEWAY(HttpStatus.BAD_GATEWAY, "외부 서비스와 연결에 문제가 발생했습니다. 잠시 후에 다시 시도해주세요.")
     ;
 
     private final HttpStatus httpStatus;
