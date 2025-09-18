@@ -123,7 +123,8 @@ jobs:
           script: |
             cd ~
             sudo docker login -u "${{ secrets.DOCKER_USERNAME }}" -p "${{ secrets.DOCKER_PASSWORD }}"
-            ./server/rate-limiter-deploy.sh
+            cd server
+            ./rate-limiter-deploy.sh
 
       # 보안 규칙에 ssh IP 삭제
       - name: Remove Github Actions IP from security group
