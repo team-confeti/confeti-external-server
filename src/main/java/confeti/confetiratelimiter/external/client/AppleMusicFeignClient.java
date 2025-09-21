@@ -1,6 +1,5 @@
 package confeti.confetiratelimiter.external.client;
 
-import confeti.confetiratelimiter.external.client.dto.response.album.AppleMusicAlbumsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
@@ -57,15 +56,6 @@ public interface AppleMusicFeignClient {
             @PathVariable String id,
             @RequestParam String limit,
             @RequestParam String offset
-    );
-
-    /**
-     * url: https://developer.apple.com/documentation/applemusicapi/get-multiple-catalog-albums
-     * fetch limit: 100
-     */
-    @GetMapping("/albums")
-    AppleMusicAlbumsResponse getAlbumsByIds(
-            @RequestParam String ids
     );
 
     /**

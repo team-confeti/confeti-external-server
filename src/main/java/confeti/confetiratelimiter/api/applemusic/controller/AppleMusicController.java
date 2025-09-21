@@ -57,13 +57,6 @@ public class AppleMusicController {
         return ApiResponseUtil.success(appleMusicFacade.getArtistMusicsById(id, limit, offset));
     }
 
-    @GetMapping("/albums")
-    public ResponseEntity<BaseResponse<?>> getAlbumsByIds(
-            @RequestParam String ids
-    ) {
-        return ApiResponseUtil.success(appleMusicFacade.getAlbumsByIds(ids));
-    }
-
     @GetMapping("/songs")
     public ResponseEntity<BaseResponse<?>> getSongsByIds(
             @RequestParam String ids

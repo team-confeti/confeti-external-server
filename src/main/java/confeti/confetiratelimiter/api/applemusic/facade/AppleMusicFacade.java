@@ -2,7 +2,6 @@ package confeti.confetiratelimiter.api.applemusic.facade;
 
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
-import confeti.confetiratelimiter.external.client.dto.response.album.AppleMusicAlbumsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
@@ -47,10 +46,6 @@ public class AppleMusicFacade {
 
     public AppleMusicArtistMusicsResponse getArtistMusicsById(String id, String limit, String offset) {
         return appleMusicService.getArtistMusicsById(id, limit, offset);
-    }
-
-    public AppleMusicAlbumsResponse getAlbumsByIds(String ids) {
-        return appleMusicService.getAlbumsByIds(ids);
     }
 
     public AppleMusicMusicsResponse getSongsByIds(String ids) {
