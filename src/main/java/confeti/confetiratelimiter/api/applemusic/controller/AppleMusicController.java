@@ -35,13 +35,20 @@ public class AppleMusicController {
         return ApiResponseUtil.success(appleMusicFacade.getArtistsByIds(ids));
     }
 
-    @GetMapping("/artists/{id}/view/{view}")
+    @GetMapping("/artists/{id}/view/similar-artists")
     public ResponseEntity<BaseResponse<?>> getRelatedArtistsById(
             @PathVariable String id,
-            @PathVariable String view,
             @RequestParam String limit
     ) {
-        return ApiResponseUtil.success(appleMusicFacade.getRelatedArtistsById(id, view, limit));
+        return ApiResponseUtil.success(appleMusicFacade.getRelatedArtistsById(id, limit));
+    }
+
+    @GetMapping("/artists/{id}/view/top-songs")
+    public ResponseEntity<BaseResponse<?>> getArtistTopSongsById(
+            @PathVariable String id,
+            @RequestParam String limit
+    ) {
+        return ApiResponseUtil.success(appleMusicFacade.getArtistTopSongsById(id, limit));
     }
 
     @GetMapping("/artists/{id}/songs")

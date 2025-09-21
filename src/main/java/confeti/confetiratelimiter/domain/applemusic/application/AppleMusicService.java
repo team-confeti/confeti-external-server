@@ -39,9 +39,14 @@ public class AppleMusicService {
         return client.getArtistsByIds(ids);
     }
 
-    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String view, String limit) {
-        log.info("AppleMusicService.getRelatedArtistsById Related artists lookup started. Target artist IDs : {}, View : {}, Limit : {}", id, view, limit);
-        return client.getRelatedArtistsById(id, view, limit);
+    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String limit) {
+        log.info("AppleMusicService.getRelatedArtistsById Related artists lookup started. Target artist IDs : {}, View : similar-artist, Limit : {}", id, limit);
+        return client.getRelatedArtistsById(id, limit);
+    }
+
+    public AppleMusicSongsResponse getArtistTopSongsById(String id, String limit) {
+        log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}", id, limit);
+        return client.getArtistTopSongsById(id, limit);
     }
 
     public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {

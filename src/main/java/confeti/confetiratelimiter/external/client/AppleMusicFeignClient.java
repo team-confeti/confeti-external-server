@@ -40,10 +40,19 @@ public interface AppleMusicFeignClient {
      * url: https://developer.apple.com/documentation/applemusicapi/fetch-a-view-on-this-resource-by-name-4kow5
      * limit: no specified
      */
-    @GetMapping("/artists/{id}/view/{view}")
+    @GetMapping("/artists/{id}/view/top-songs")
+    AppleMusicSongsResponse getArtistTopSongsById(
+            @PathVariable String id,
+            @RequestParam String limit
+    );
+
+    /**
+     * url: https://developer.apple.com/documentation/applemusicapi/fetch-a-view-on-this-resource-by-name-4kow5
+     * limit: no specified
+     */
+    @GetMapping("/artists/{id}/view/similar-artists")
     AppleMusicArtistsResponse getRelatedArtistsById(
             @PathVariable String id,
-            @PathVariable String view,
             @RequestParam String limit
     );
 

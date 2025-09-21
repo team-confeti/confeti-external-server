@@ -40,9 +40,14 @@ public class AppleMusicFacade {
         );
     }
 
-    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String view, String limit) {
-        return appleMusicService.getRelatedArtistsById(id, view, limit);
+    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String limit) {
+        return appleMusicService.getRelatedArtistsById(id, limit);
     }
+
+    public AppleMusicSongsResponse getArtistTopSongsById(String id, String limit) {
+        return appleMusicService.getArtistTopSongsById(id, limit);
+    }
+
 
     public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {
         return appleMusicService.getArtistMusicsById(id, limit, offset);
