@@ -1,5 +1,6 @@
 package confeti.confetiratelimiter.api.applemusic.controller;
 
+import confeti.confetiratelimiter.api.applemusic.facade.AppleMusicFacade;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicService;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
@@ -21,14 +22,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/apple-music-api")
 public class AppleMusicController {
 
-    private final AppleMusicService appleMusicService;
+    private final AppleMusicFacade appleMusicFacade;
     private final AppleMusicValidateService appleMusicValidateService;
 
     @GetMapping("/artists/{id}")
     public ResponseEntity<BaseResponse<?>> getArtistById(
             @PathVariable String id
     ) {
-        return ApiResponseUtil.success(appleMusicService.getArtistById(id));
+        return ApiResponseUtil.success(appleMusicFacade.getArtistById(id));
     }
 
     @GetMapping("/artists")
@@ -36,7 +37,7 @@ public class AppleMusicController {
             @RequestParam String ids
     ) {
         appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ARTISTS);
-        return ApiResponseUtil.success(appleMusicService.getArtistsByIds(ids));
+        return ApiResponseUtil.success(appleMusicFacade.getArtistsByIds(ids));
     }
 
     @GetMapping("/artists/{id}/view/{view}")
@@ -45,7 +46,7 @@ public class AppleMusicController {
             @PathVariable String view,
             @RequestParam String limit
     ) {
-        return ApiResponseUtil.success(appleMusicService.getRelatedArtistsById(id, view, limit));
+        return ApiResponseUtil.success(appleMusicFacade.getRelatedArtistsById(id, view, limit));
     }
 
     @GetMapping("/artists/{id}/songs")
@@ -54,7 +55,7 @@ public class AppleMusicController {
             @RequestParam String limit,
             @RequestParam String offset
     ) {
-        return ApiResponseUtil.success(appleMusicService.getArtistMusicsById(id, limit, offset));
+        return ApiResponseUtil.success(appleMusicFacade.getArtistMusicsById(id, limit, offset));
     }
 
     @GetMapping("/albums")
@@ -62,7 +63,7 @@ public class AppleMusicController {
             @RequestParam String ids
     ) {
         appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ALBUMS);
-        return ApiResponseUtil.success(appleMusicService.getAlbumsByIds(ids));
+        return ApiResponseUtil.success(appleMusicFacade.getAlbumsByIds(ids));
     }
 
     @GetMapping("/songs")
@@ -70,7 +71,7 @@ public class AppleMusicController {
             @RequestParam String ids
     ) {
         appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.SONGS);
-        return ApiResponseUtil.success(appleMusicService.getSongsByIds(ids));
+        return ApiResponseUtil.success(appleMusicFacade.getSongsByIds(ids));
     }
 
     @GetMapping("/search")
@@ -82,7 +83,7 @@ public class AppleMusicController {
             @RequestParam(required = false) String with
     ) {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
-        return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
+        return ApiResponseUtil.success(appleMusicFacade.searchByKeyword(term, types, limit, offset, with));
     }
 
     @GetMapping("/charts")
@@ -91,6 +92,6 @@ public class AppleMusicController {
             @RequestParam String limit
     ) {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.CHARTS_MIN, AppleMusicFetchLimit.CHARTS_MAX);
-        return ApiResponseUtil.success(appleMusicService.getCharts(types, limit));
+        return ApiResponseUtil.success(appleMusicFacade.getCharts(types, limit));
     }
 }
