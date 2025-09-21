@@ -4,8 +4,8 @@ import confeti.confetiratelimiter.external.client.AppleMusicFeignClient;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicArtistSongsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicSongsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import confeti.confetiratelimiter.global.exception.ConfetiException;
@@ -44,12 +44,12 @@ public class AppleMusicService {
         return client.getRelatedArtistsById(id, view, limit);
     }
 
-    public AppleMusicArtistMusicsResponse getArtistMusicsById(String id, String limit, String offset) {
+    public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {
         log.info("AppleMusicService.getArtistMusicsById Artist musics lookup started. Target artist ID : {}, Limit : {}, Offset : {}", id, limit, offset);
         return client.getArtistMusicsById(id, limit, offset);
     }
 
-    public AppleMusicMusicsResponse getSongsByIds(String ids) {
+    public AppleMusicSongsResponse getSongsByIds(String ids) {
         log.info("AppleMusicService.getSongsByIds Songs lookup started. Target song IDs : {}", ids);
         return client.getSongsByIds(ids);
     }

@@ -2,8 +2,8 @@ package confeti.confetiratelimiter.external.client;
 
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicArtistSongsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicSongsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.config.AppleMusicFeignConfig;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -52,7 +52,7 @@ public interface AppleMusicFeignClient {
      * limit: no specified
      */
     @GetMapping("/artists/{id}/songs")
-    AppleMusicArtistMusicsResponse getArtistMusicsById(
+    AppleMusicArtistSongsResponse getArtistMusicsById(
             @PathVariable String id,
             @RequestParam String limit,
             @RequestParam String offset
@@ -63,7 +63,7 @@ public interface AppleMusicFeignClient {
      * fetch limit: 300
      */
     @GetMapping("/songs")
-    AppleMusicMusicsResponse getSongsByIds(
+    AppleMusicSongsResponse getSongsByIds(
             @RequestParam String ids
     );
 

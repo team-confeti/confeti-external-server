@@ -5,8 +5,8 @@ import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistResponse;
 import confeti.confetiratelimiter.external.client.dto.response.artist.AppleMusicArtistsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.chart.AppleMusicChartsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicArtistMusicsResponse;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicArtistSongsResponse;
+import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicSongsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.annotation.Facade;
 import java.util.Arrays;
@@ -44,19 +44,19 @@ public class AppleMusicFacade {
         return appleMusicService.getRelatedArtistsById(id, view, limit);
     }
 
-    public AppleMusicArtistMusicsResponse getArtistMusicsById(String id, String limit, String offset) {
+    public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {
         return appleMusicService.getArtistMusicsById(id, limit, offset);
     }
 
-    public AppleMusicMusicsResponse getSongsByIds(String ids) {
+    public AppleMusicSongsResponse getSongsByIds(String ids) {
         List<String> songIds = Arrays.stream(ids.split(ID_DELIMITER)).toList();
 
-        return new AppleMusicMusicsResponse(
+        return new AppleMusicSongsResponse(
                 null,
                 partition(songIds, AppleMusicFetchLimit.SONGS)
                         .parallelStream()
                         .map(appleMusicService::getSongsByIds)
-                        .map(AppleMusicMusicsResponse::data)
+                        .map(AppleMusicSongsResponse::data)
                         .flatMap(List::stream)
                         .toList()
         );
