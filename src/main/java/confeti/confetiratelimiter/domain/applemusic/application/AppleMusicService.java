@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@CircuitBreaker(name = "appleMusicService", fallbackMethod = "circuitBreakerFallback")
 @RateLimiter(name = "appleMusicService")
+@CircuitBreaker(name = "appleMusicService")
 public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
@@ -68,9 +68,5 @@ public class AppleMusicService {
     public AppleMusicChartsResponse getCharts(String types, String limit) {
         log.info("AppleMusicService.getCharts Charts lookup started. Types : {}, Limit : {}", types, limit);
         return client.getCharts(types, limit);
-    }
-
-    public void circuitBreakerFallback() {
-        throw new ConfetiException(ErrorCode.BAD_GATEWAY);
     }
 }
