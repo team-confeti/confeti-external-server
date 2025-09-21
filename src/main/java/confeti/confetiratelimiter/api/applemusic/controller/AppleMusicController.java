@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apple-music-api")
-@RateLimiter(name = "appleMusicService")
 public class AppleMusicController {
 
     private final AppleMusicService appleMusicService;

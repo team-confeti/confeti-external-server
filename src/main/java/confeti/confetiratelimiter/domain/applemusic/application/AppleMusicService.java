@@ -11,6 +11,7 @@ import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusic
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import confeti.confetiratelimiter.global.exception.ConfetiException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @CircuitBreaker(name = "appleMusicService", fallbackMethod = "circuitBreakerFallback")
+@RateLimiter(name = "appleMusicService")
 public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
