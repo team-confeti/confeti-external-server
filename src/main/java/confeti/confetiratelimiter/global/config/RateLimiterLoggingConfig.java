@@ -18,14 +18,12 @@ public class RateLimiterLoggingConfig {
     public void addLoggingEvent() {
         registry.getAllRateLimiters().forEach(rateLimiter ->
                 rateLimiter.getEventPublisher()
-                        .onSuccess(event -> log.info("Rate Limiter [SUCCESS-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()))
                         .onFailure(event -> log.info("Rate Limiter [FAIL-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()))
         );
 
         registry.getEventPublisher()
                 .onEntryAdded(addedEvent -> {
                     addedEvent.getAddedEntry().getEventPublisher()
-                            .onSuccess(event -> log.info("Rate Limiter [SUCCESS-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()))
                             .onFailure(event -> log.info("Rate Limiter [FAIL-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()));
                 });
     }
