@@ -36,7 +36,6 @@ public class AppleMusicController {
     public ResponseEntity<BaseResponse<?>> getArtists(
             @RequestParam String ids
     ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ARTISTS);
         return ApiResponseUtil.success(appleMusicFacade.getArtistsByIds(ids));
     }
 
@@ -62,7 +61,6 @@ public class AppleMusicController {
     public ResponseEntity<BaseResponse<?>> getAlbumsByIds(
             @RequestParam String ids
     ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ALBUMS);
         return ApiResponseUtil.success(appleMusicFacade.getAlbumsByIds(ids));
     }
 
@@ -70,7 +68,6 @@ public class AppleMusicController {
     public ResponseEntity<BaseResponse<?>> getSongsByIds(
             @RequestParam String ids
     ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.SONGS);
         return ApiResponseUtil.success(appleMusicFacade.getSongsByIds(ids));
     }
 
