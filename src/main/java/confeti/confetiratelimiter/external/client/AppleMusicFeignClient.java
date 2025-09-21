@@ -6,12 +6,12 @@ import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicAr
 import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicSongsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.config.AppleMusicFeignConfig;
-import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
+import reactivefeign.spring.config.ReactiveFeignClient;
 
-@FeignClient(
+@ReactiveFeignClient(
         name = "AppleMusicFeignClient",
         url = "${apple-music.api.host}",
         path = "${apple-music.api.path}",
