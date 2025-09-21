@@ -20,11 +20,5 @@ public class RateLimiterLoggingConfig {
                 rateLimiter.getEventPublisher()
                         .onFailure(event -> log.info("Rate Limiter [FAIL-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()))
         );
-
-        registry.getEventPublisher()
-                .onEntryAdded(addedEvent -> {
-                    addedEvent.getAddedEntry().getEventPublisher()
-                            .onFailure(event -> log.info("Rate Limiter [FAIL-{}] acquired : {}", event.getEventType(), event.getRateLimiterName()));
-                });
     }
 }
