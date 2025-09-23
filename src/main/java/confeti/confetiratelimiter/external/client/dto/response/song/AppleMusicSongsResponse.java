@@ -6,4 +6,7 @@ public record AppleMusicSongsResponse(
         String next,
         List<AppleMusicSongResponse> data
 ) {
+    public AppleMusicSongsResponse(List<AppleMusicSongResponse> data) {
+        this(null, data);
+    }
 }

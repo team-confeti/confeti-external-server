@@ -14,6 +14,7 @@ import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Service
@@ -24,47 +25,48 @@ public class AppleMusicService {
 
     private final AppleMusicFeignClient client;
 
-    public AppleMusicArtistResponse getArtistById(String id) {
+    public Mono<AppleMusicArtistResponse> getArtistById(String id) {
         log.info("AppleMusicService.getArtistById Single artist lookup started. Target artist ID : {}", id);
-        AppleMusicArtistsResponse appleMusicArtistsResponse = client.getArtistById(id);
 
-        return appleMusicArtistsResponse.data().stream().findFirst()
-                .orElseThrow(
-                        () -> new ConfetiException(ErrorCode.NOT_FOUND)
+        return client.getArtistById(id)
+                .map(response -> response.data().stream().findFirst()
+                            .orElseThrow(
+                                    () -> new ConfetiException(ErrorCode.NOT_FOUND)
+                            )
                 );
     }
 
-    public AppleMusicArtistsResponse getArtistsByIds(String ids) {
+    public Mono<AppleMusicArtistsResponse> getArtistsByIds(String ids) {
         log.info("AppleMusicService.getArtistsByIds Multiple artists lookup started. Target artist IDs : {}", ids);
         return client.getArtistsByIds(ids);
     }
 
-    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String limit) {
+    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit) {
         log.info("AppleMusicService.getRelatedArtistsById Related artists lookup started. Target artist IDs : {}, View : similar-artist, Limit : {}", id, limit);
         return client.getRelatedArtistsById(id, limit);
     }
 
-    public AppleMusicSongsResponse getArtistTopSongsById(String id, String limit) {
+    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit) {
         log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}", id, limit);
         return client.getArtistTopSongsById(id, limit);
     }
 
-    public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {
+    public Mono<AppleMusicArtistSongsResponse> getArtistMusicsById(String id, String limit, String offset) {
         log.info("AppleMusicService.getArtistMusicsById Artist musics lookup started. Target artist ID : {}, Limit : {}, Offset : {}", id, limit, offset);
         return client.getArtistMusicsById(id, limit, offset);
     }
 
-    public AppleMusicSongsResponse getSongsByIds(String ids) {
+    public Mono<AppleMusicSongsResponse> getSongsByIds(String ids) {
         log.info("AppleMusicService.getSongsByIds Songs lookup started. Target song IDs : {}", ids);
         return client.getSongsByIds(ids);
     }
 
-    public AppleMusicSearchResponse searchByKeyword(String term, String types, String limit, String offset, String with) {
+    public Mono<AppleMusicSearchResponse> searchByKeyword(String term, String types, String limit, String offset, String with) {
         log.info("AppleMusicService.searchByKeyword Search started. Term : {}, Types : {}, Limit : {}, Offset : {}, Width : {}", term, types, limit, offset, with);
         return client.searchByKeyword(term, types, limit, offset, with);
     }
 
-    public AppleMusicChartsResponse getCharts(String types, String limit) {
+    public Mono<AppleMusicChartsResponse> getCharts(String types, String limit) {
         log.info("AppleMusicService.getCharts Charts lookup started. Types : {}, Limit : {}", types, limit);
         return client.getCharts(types, limit);
     }

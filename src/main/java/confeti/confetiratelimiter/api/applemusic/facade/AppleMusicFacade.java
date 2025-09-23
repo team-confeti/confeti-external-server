@@ -14,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import lombok.RequiredArgsConstructor;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Facade
 @RequiredArgsConstructor
@@ -23,55 +25,50 @@ public class AppleMusicFacade {
 
     private final AppleMusicService appleMusicService;
 
-    public AppleMusicArtistResponse getArtistById(String id) {
+    public Mono<AppleMusicArtistResponse> getArtistById(String id) {
         return appleMusicService.getArtistById(id);
     }
 
-    public AppleMusicArtistsResponse getArtistsByIds(String ids) {
+    public Mono<AppleMusicArtistsResponse> getArtistsByIds(String ids) {
         List<String> artistIds = Arrays.stream(ids.split(ID_DELIMITER)).toList();
 
-        return new AppleMusicArtistsResponse(
-                partition(artistIds, AppleMusicFetchLimit.ARTISTS)
-                .parallelStream()
-                .map(appleMusicService::getArtistsByIds)
+        return Flux.fromIterable(partition(artistIds, AppleMusicFetchLimit.ARTISTS))
+                .flatMap(appleMusicService::getArtistsByIds)
                 .map(AppleMusicArtistsResponse::data)
-                .flatMap(List::stream)
-                .toList()
-        );
+                .flatMap(Flux::fromIterable)
+                .collectList()
+                .map(AppleMusicArtistsResponse::new);
     }
 
-    public AppleMusicArtistsResponse getRelatedArtistsById(String id, String limit) {
+    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit) {
         return appleMusicService.getRelatedArtistsById(id, limit);
     }
 
-    public AppleMusicSongsResponse getArtistTopSongsById(String id, String limit) {
+    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit) {
         return appleMusicService.getArtistTopSongsById(id, limit);
     }
 
 
-    public AppleMusicArtistSongsResponse getArtistMusicsById(String id, String limit, String offset) {
+    public Mono<AppleMusicArtistSongsResponse> getArtistMusicsById(String id, String limit, String offset) {
         return appleMusicService.getArtistMusicsById(id, limit, offset);
     }
 
-    public AppleMusicSongsResponse getSongsByIds(String ids) {
+    public Mono<AppleMusicSongsResponse> getSongsByIds(String ids) {
         List<String> songIds = Arrays.stream(ids.split(ID_DELIMITER)).toList();
 
-        return new AppleMusicSongsResponse(
-                null,
-                partition(songIds, AppleMusicFetchLimit.SONGS)
-                        .parallelStream()
-                        .map(appleMusicService::getSongsByIds)
-                        .map(AppleMusicSongsResponse::data)
-                        .flatMap(List::stream)
-                        .toList()
-        );
+        return Flux.fromIterable(partition(songIds, AppleMusicFetchLimit.SONGS))
+                .flatMap(appleMusicService::getSongsByIds)
+                .map(AppleMusicSongsResponse::data)
+                .flatMap(Flux::fromIterable)
+                .collectList()
+                .map(AppleMusicSongsResponse::new);
     }
 
-    public AppleMusicSearchResponse searchByKeyword(String term, String types, String limit, String offset, String with) {
+    public Mono<AppleMusicSearchResponse> searchByKeyword(String term, String types, String limit, String offset, String with) {
         return appleMusicService.searchByKeyword(term, types, limit, offset, with);
     }
 
-    public AppleMusicChartsResponse getCharts(String types, String limit) {
+    public Mono<AppleMusicChartsResponse> getCharts(String types, String limit) {
         return appleMusicService.getCharts(types, limit);
     }
 

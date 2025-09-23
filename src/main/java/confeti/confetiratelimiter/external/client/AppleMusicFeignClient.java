@@ -6,11 +6,14 @@ import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicAr
 import confeti.confetiratelimiter.external.client.dto.response.song.AppleMusicSongsResponse;
 import confeti.confetiratelimiter.external.client.dto.response.search.AppleMusicSearchResponse;
 import confeti.confetiratelimiter.global.config.AppleMusicFeignConfig;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import reactivefeign.spring.config.ReactiveFeignClient;
+import reactor.core.publisher.Mono;
 
+@Component
 @ReactiveFeignClient(
         name = "AppleMusicFeignClient",
         url = "${apple-music.api.host}",
@@ -23,7 +26,7 @@ public interface AppleMusicFeignClient {
      * url: https://developer.apple.com/documentation/applemusicapi/get-a-catalog-artist
      */
     @GetMapping("/artists/{id}")
-    AppleMusicArtistsResponse getArtistById(
+    Mono<AppleMusicArtistsResponse> getArtistById(
             @PathVariable String id
     );
 
@@ -32,7 +35,7 @@ public interface AppleMusicFeignClient {
      * fetch limit: 25
      */
     @GetMapping("/artists")
-    AppleMusicArtistsResponse getArtistsByIds(
+    Mono<AppleMusicArtistsResponse> getArtistsByIds(
             @RequestParam String ids
     );
 
@@ -41,7 +44,7 @@ public interface AppleMusicFeignClient {
      * limit: no specified
      */
     @GetMapping("/artists/{id}/view/top-songs")
-    AppleMusicSongsResponse getArtistTopSongsById(
+    Mono<AppleMusicSongsResponse> getArtistTopSongsById(
             @PathVariable String id,
             @RequestParam String limit
     );
@@ -51,7 +54,7 @@ public interface AppleMusicFeignClient {
      * limit: no specified
      */
     @GetMapping("/artists/{id}/view/similar-artists")
-    AppleMusicArtistsResponse getRelatedArtistsById(
+    Mono<AppleMusicArtistsResponse> getRelatedArtistsById(
             @PathVariable String id,
             @RequestParam String limit
     );
@@ -61,7 +64,7 @@ public interface AppleMusicFeignClient {
      * limit: no specified
      */
     @GetMapping("/artists/{id}/songs")
-    AppleMusicArtistSongsResponse getArtistMusicsById(
+    Mono<AppleMusicArtistSongsResponse> getArtistMusicsById(
             @PathVariable String id,
             @RequestParam String limit,
             @RequestParam String offset
@@ -72,7 +75,7 @@ public interface AppleMusicFeignClient {
      * fetch limit: 300
      */
     @GetMapping("/songs")
-    AppleMusicSongsResponse getSongsByIds(
+    Mono<AppleMusicSongsResponse> getSongsByIds(
             @RequestParam String ids
     );
 
@@ -81,7 +84,7 @@ public interface AppleMusicFeignClient {
      * limit: 5 ~ 25
      */
     @GetMapping("/search")
-    AppleMusicSearchResponse searchByKeyword(
+    Mono<AppleMusicSearchResponse> searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
             @RequestParam String limit,
@@ -94,7 +97,7 @@ public interface AppleMusicFeignClient {
      * limit: 20 ~ 200
      */
     @GetMapping("/charts")
-    AppleMusicChartsResponse getCharts(
+    Mono<AppleMusicChartsResponse> getCharts(
             @RequestParam String types,
             @RequestParam String limit
     );

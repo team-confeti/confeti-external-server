@@ -24,16 +24,6 @@ public class AppleMusicFeignConfig {
     private final AppleMusicTokenGenerator tokenGenerator;
 
     @Bean
-    public ErrorDecoder errorDecoder() {
-        return new AppleMusicTokenRefreshDecoder(tokenGenerator);
-    }
-
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return new AppleMusicTokenRefreshInterceptor(tokenGenerator);
-    }
-
-    @Bean
     public Decoder feignDecoder() {
         ObjectMapper objectMapper =
                 new ObjectMapper()

@@ -1,18 +1,24 @@
 package confeti.confetiratelimiter.global.interceptor;
 
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicTokenGenerator;
-import feign.RequestInterceptor;
-import feign.RequestTemplate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.stereotype.Component;
+import reactivefeign.client.ReactiveHttpRequest;
+import reactivefeign.client.ReactiveHttpRequestInterceptor;
+import reactor.core.publisher.Mono;
 
+@Component
 @RequiredArgsConstructor
-public class AppleMusicTokenRefreshInterceptor implements RequestInterceptor {
+public class AppleMusicTokenRefreshInterceptor implements ReactiveHttpRequestInterceptor {
 
     private final AppleMusicTokenGenerator tokenGenerator;
 
     @Override
-    public void apply(RequestTemplate template) {
-        template.header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenGenerator.getAccessToken());
+    public Mono<ReactiveHttpRequest> apply(ReactiveHttpRequest request) {
+        request.headers().put(HttpHeaders.AUTHORIZATION, List.of("Bearer " + tokenGenerator.getAccessToken()));
+
+        return Mono.just(request);
     }
 }
