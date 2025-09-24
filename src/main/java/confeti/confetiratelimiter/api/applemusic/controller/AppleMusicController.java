@@ -4,7 +4,6 @@ import confeti.confetiratelimiter.api.applemusic.facade.AppleMusicFacade;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
-import confeti.confetiratelimiter.global.common.response.BaseResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

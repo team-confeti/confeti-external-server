@@ -1,7 +1,6 @@
 package confeti.confetiratelimiter.global.exception;
 
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
-import confeti.confetiratelimiter.global.common.response.BaseResponse;
 import confeti.confetiratelimiter.global.common.response.ErrorCode;
 import feign.FeignException;
 import io.github.resilience4j.ratelimiter.RequestNotPermitted;
