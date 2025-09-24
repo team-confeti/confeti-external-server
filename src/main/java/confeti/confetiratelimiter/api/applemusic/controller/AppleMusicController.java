@@ -23,7 +23,7 @@ public class AppleMusicController {
     private final AppleMusicValidateService appleMusicValidateService;
 
     @GetMapping("/artists/{id}")
-    public Mono<ResponseEntity<BaseResponse<?>>> getArtistById(
+    public Mono<ResponseEntity<?>> getArtistById(
             @PathVariable String id
     ) {
         return appleMusicFacade.getArtistById(id)
@@ -31,7 +31,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/artists")
-    public Mono<ResponseEntity<BaseResponse<?>>> getArtists(
+    public Mono<ResponseEntity<?>> getArtists(
             @RequestParam String ids
     ) {
         return appleMusicFacade.getArtistsByIds(ids)
@@ -39,7 +39,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/artists/{id}/view/similar-artists")
-    public Mono<ResponseEntity<BaseResponse<?>>> getRelatedArtistsById(
+    public Mono<ResponseEntity<?>> getRelatedArtistsById(
             @PathVariable String id,
             @RequestParam String limit
     ) {
@@ -48,7 +48,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/artists/{id}/view/top-songs")
-    public Mono<ResponseEntity<BaseResponse<?>>> getArtistTopSongsById(
+    public Mono<ResponseEntity<?>> getArtistTopSongsById(
             @PathVariable String id,
             @RequestParam String limit
     ) {
@@ -57,7 +57,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/artists/{id}/songs")
-    public Mono<ResponseEntity<BaseResponse<?>>> getArtistMusicsById(
+    public Mono<ResponseEntity<?>> getArtistMusicsById(
             @PathVariable String id,
             @RequestParam String limit,
             @RequestParam String offset
@@ -67,7 +67,7 @@ public class AppleMusicController {
     }
 
     @GetMapping("/songs")
-    public Mono<ResponseEntity<BaseResponse<?>>> getSongsByIds(
+    public Mono<ResponseEntity<?>> getSongsByIds(
             @RequestParam String ids
     ) {
         return appleMusicFacade.getSongsByIds(ids)
@@ -75,21 +75,21 @@ public class AppleMusicController {
     }
 
     @GetMapping("/search")
-    public Mono<ResponseEntity<BaseResponse<?>>> searchByKeyword(
+    public Mono<ResponseEntity<?>> searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
             @RequestParam String limit,
             @RequestParam(required = false) String offset,
             @RequestParam(required = false) String with
     ) {
-        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
+        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MAX);
 
         return appleMusicFacade.searchByKeyword(term, types, limit, offset, with)
                 .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/charts")
-    public Mono<ResponseEntity<BaseResponse<?>>> getCharts(
+    public Mono<ResponseEntity<?>> getCharts(
             @RequestParam String types,
             @RequestParam String limit
     ) {
