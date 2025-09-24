@@ -88,8 +88,8 @@ public interface AppleMusicFeignClient {
             @RequestParam String term,
             @RequestParam String types,
             @RequestParam String limit,
-            @RequestParam String offset,
-            @RequestParam String with
+            @RequestParam(required = false) String offset,
+            @RequestParam(required = false) String with
     );
 
     /**
