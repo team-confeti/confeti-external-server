@@ -23,11 +23,13 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    implementation 'io.netty:netty-resolver-dns-native-macos:4.1.68.Final:osx-aarch_64'
 
     // OpenFeign
-    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     implementation 'io.github.openfeign:feign-okhttp:11.10'
     implementation 'io.github.openfeign:feign-jackson:11.10'
+    implementation 'com.playtika.reactivefeign:feign-reactor-spring-cloud-starter:4.2.1'
 
     // Validation
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -39,6 +41,9 @@ dependencies {
     implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.6'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.12.6'
     runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.12.6'
+
+    // Cache
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.1.8'
 
     // Resilience4j
     implementation 'io.github.resilience4j:resilience4j-spring-boot3:2.1.0'

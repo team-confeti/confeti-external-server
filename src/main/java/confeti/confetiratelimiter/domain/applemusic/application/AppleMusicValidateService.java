@@ -9,14 +9,6 @@ public class AppleMusicValidateService {
 
     private static final String IDS_DELIMITER = ",";
 
-    public void validateIds(String ids, int fetchLimit) {
-        String[] idList = ids.split(IDS_DELIMITER);
-
-        if (idList.length > fetchLimit) {
-            throw new ConfetiException(ErrorCode.BAD_REQUEST);
-        }
-    }
-
     public void validateLimit(String limit, int max) {
         try {
             int parsedLimit = Integer.parseInt(limit);

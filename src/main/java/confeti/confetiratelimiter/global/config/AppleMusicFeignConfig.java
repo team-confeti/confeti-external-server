@@ -24,16 +24,6 @@ public class AppleMusicFeignConfig {
     private final AppleMusicTokenGenerator tokenGenerator;
 
     @Bean
-    public ErrorDecoder errorDecoder() {
-        return new AppleMusicTokenRefreshDecoder(tokenGenerator);
-    }
-
-    @Bean
-    public RequestInterceptor requestInterceptor() {
-        return new AppleMusicTokenRefreshInterceptor(tokenGenerator);
-    }
-
-    @Bean
     public Decoder feignDecoder() {
         ObjectMapper objectMapper =
                 new ObjectMapper()
@@ -56,8 +46,8 @@ public class AppleMusicFeignConfig {
     public OkHttpClient client() {
         return new OkHttpClient(
                 new okhttp3.OkHttpClient.Builder()
-                        .connectTimeout(Duration.ofSeconds(5))
-                        .callTimeout(Duration.ofSeconds(10)) // sync with rate limit timeout
+                        .connectTimeout(Duration.ofSeconds(2))
+                        .callTimeout(Duration.ofSeconds(2)) // sync with rate limit timeout
                         .build()
         );
     }

@@ -1,13 +1,9 @@
 package confeti.confetiratelimiter.api.applemusic.controller;
 
-import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicService;
+import confeti.confetiratelimiter.api.applemusic.facade.AppleMusicFacade;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
-import confeti.confetiratelimiter.external.client.dto.response.music.AppleMusicMusicsResponse;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
-import confeti.confetiratelimiter.global.common.response.BaseResponse;
-import confeti.confetiratelimiter.global.common.response.ErrorCode;
-import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,83 +11,90 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/apple-music-api")
-@RateLimiter(name = "appleMusicService")
 public class AppleMusicController {
 
-    private final AppleMusicService appleMusicService;
+    private final AppleMusicFacade appleMusicFacade;
     private final AppleMusicValidateService appleMusicValidateService;
 
     @GetMapping("/artists/{id}")
-    public ResponseEntity<BaseResponse<?>> getArtistById(
+    public Mono<ResponseEntity<?>> getArtistById(
             @PathVariable String id
     ) {
-        return ApiResponseUtil.success(appleMusicService.getArtistById(id));
+        return appleMusicFacade.getArtistById(id)
+                .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/artists")
-    public ResponseEntity<BaseResponse<?>> getArtists(
+    public Mono<ResponseEntity<?>> getArtists(
             @RequestParam String ids
     ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ARTISTS);
-        return ApiResponseUtil.success(appleMusicService.getArtistsByIds(ids));
+        return appleMusicFacade.getArtistsByIds(ids)
+                .map(ApiResponseUtil::success);
     }
 
-    @GetMapping("/artists/{id}/view/{view}")
-    public ResponseEntity<BaseResponse<?>> getRelatedArtistsById(
+    @GetMapping("/artists/{id}/view/similar-artists")
+    public Mono<ResponseEntity<?>> getRelatedArtistsById(
             @PathVariable String id,
-            @PathVariable String view,
             @RequestParam String limit
     ) {
-        return ApiResponseUtil.success(appleMusicService.getRelatedArtistsById(id, view, limit));
+        return appleMusicFacade.getRelatedArtistsById(id, limit)
+                .map(ApiResponseUtil::success);
+    }
+
+    @GetMapping("/artists/{id}/view/top-songs")
+    public Mono<ResponseEntity<?>> getArtistTopSongsById(
+            @PathVariable String id,
+            @RequestParam String limit
+    ) {
+        return appleMusicFacade.getArtistTopSongsById(id, limit)
+                .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/artists/{id}/songs")
-    public ResponseEntity<BaseResponse<?>> getArtistMusicsById(
+    public Mono<ResponseEntity<?>> getArtistMusicsById(
             @PathVariable String id,
             @RequestParam String limit,
             @RequestParam String offset
     ) {
-        return ApiResponseUtil.success(appleMusicService.getArtistMusicsById(id, limit, offset));
-    }
-
-    @GetMapping("/albums")
-    public ResponseEntity<BaseResponse<?>> getAlbumsByIds(
-            @RequestParam String ids
-    ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.ALBUMS);
-        return ApiResponseUtil.success(appleMusicService.getAlbumsByIds(ids));
+        return appleMusicFacade.getArtistMusicsById(id, limit, offset)
+                .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/songs")
-    public ResponseEntity<BaseResponse<?>> getSongsByIds(
+    public Mono<ResponseEntity<?>> getSongsByIds(
             @RequestParam String ids
     ) {
-        appleMusicValidateService.validateIds(ids, AppleMusicFetchLimit.SONGS);
-        return ApiResponseUtil.success(appleMusicService.getSongsByIds(ids));
+        return appleMusicFacade.getSongsByIds(ids)
+                .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<BaseResponse<?>> searchByKeyword(
+    public Mono<ResponseEntity<?>> searchByKeyword(
             @RequestParam String term,
             @RequestParam String types,
             @RequestParam String limit,
             @RequestParam(required = false) String offset,
             @RequestParam(required = false) String with
     ) {
-        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MIN, AppleMusicFetchLimit.SEARCH_MAX);
-        return ApiResponseUtil.success(appleMusicService.searchByKeyword(term, types, limit, offset, with));
+        appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.SEARCH_MAX);
+
+        return appleMusicFacade.searchByKeyword(term, types, limit, offset, with)
+                .map(ApiResponseUtil::success);
     }
 
     @GetMapping("/charts")
-    public ResponseEntity<BaseResponse<?>> getCharts(
+    public Mono<ResponseEntity<?>> getCharts(
             @RequestParam String types,
             @RequestParam String limit
     ) {
         appleMusicValidateService.validateLimit(limit, AppleMusicFetchLimit.CHARTS_MIN, AppleMusicFetchLimit.CHARTS_MAX);
-        return ApiResponseUtil.success(appleMusicService.getCharts(types, limit));
+
+        return appleMusicFacade.getCharts(types, limit)
+                .map(ApiResponseUtil::success);
     }
 }

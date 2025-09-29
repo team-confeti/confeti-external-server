@@ -26,6 +26,7 @@ public class CustomErrorDecode implements ErrorDecoder {
             case 403 -> new ConfetiException(ErrorCode.FORBIDDEN, reason);
             case 404 -> new ConfetiException(ErrorCode.NOT_FOUND, reason);
             case 409 -> new ConfetiException(ErrorCode.CONFLICT, reason);
+            case 429 -> new ConfetiException(ErrorCode.TOO_MANY_REQUEST, reason);
             case 500 -> new ConfetiException(ErrorCode.INTERNAL_SERVER_ERROR, reason);
             default -> defaultErrorDecoder.decode(methodKey, response);
         };
