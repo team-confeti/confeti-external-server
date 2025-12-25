@@ -44,8 +44,8 @@ public class AppleMusicFacade {
         return appleMusicService.getRelatedArtistsById(id, limit);
     }
 
-    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit) {
-        return appleMusicService.getArtistTopSongsById(id, limit);
+    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit, String offset) {
+        return appleMusicService.getArtistTopSongsById(id, limit, offset);
     }
 
 

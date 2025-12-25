@@ -46,7 +46,8 @@ public interface AppleMusicFeignClient {
     @GetMapping("/artists/{id}/view/top-songs")
     Mono<AppleMusicSongsResponse> getArtistTopSongsById(
             @PathVariable String id,
-            @RequestParam String limit
+            @RequestParam String limit,
+            @RequestParam String offset
     );
 
     /**
