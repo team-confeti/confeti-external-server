@@ -47,7 +47,7 @@ public class AppleMusicService {
     }
 
     public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit, String offset) {
-        log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}", id, limit);
+        log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}, Offset : {}", id, limit, offset);
         return client.getArtistTopSongsById(id, limit, offset);
     }
 
