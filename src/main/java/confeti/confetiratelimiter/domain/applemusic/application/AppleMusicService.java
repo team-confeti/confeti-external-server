@@ -46,9 +46,9 @@ public class AppleMusicService {
         return client.getRelatedArtistsById(id, limit);
     }
 
-    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit) {
-        log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}", id, limit);
-        return client.getArtistTopSongsById(id, limit);
+    public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit, String offset) {
+        log.info("AppleMusicService.getArtistTopSongsById Artist top songs lookup started. Target artist IDs : {}, View : top-songs, Limit : {}, Offset : {}", id, limit, offset);
+        return client.getArtistTopSongsById(id, limit, offset);
     }
 
     public Mono<AppleMusicArtistSongsResponse> getArtistMusicsById(String id, String limit, String offset) {

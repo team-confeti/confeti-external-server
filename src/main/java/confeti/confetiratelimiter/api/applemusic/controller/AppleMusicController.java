@@ -4,6 +4,7 @@ import confeti.confetiratelimiter.api.applemusic.facade.AppleMusicFacade;
 import confeti.confetiratelimiter.domain.applemusic.application.AppleMusicValidateService;
 import confeti.confetiratelimiter.domain.applemusic.common.AppleMusicFetchLimit;
 import confeti.confetiratelimiter.global.common.response.ApiResponseUtil;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,9 +50,10 @@ public class AppleMusicController {
     @GetMapping("/artists/{id}/view/top-songs")
     public Mono<ResponseEntity<?>> getArtistTopSongsById(
             @PathVariable String id,
-            @RequestParam String limit
+            @RequestParam String limit,
+            @RequestParam(required = false) String offset
     ) {
-        return appleMusicFacade.getArtistTopSongsById(id, limit)
+        return appleMusicFacade.getArtistTopSongsById(id, limit, offset)
                 .map(ApiResponseUtil::success);
     }
 
