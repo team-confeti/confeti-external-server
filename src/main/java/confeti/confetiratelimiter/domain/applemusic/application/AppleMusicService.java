@@ -41,9 +41,9 @@ public class AppleMusicService {
         return client.getArtistsByIds(ids);
     }
 
-    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit) {
+    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit, String offset) {
         log.info("AppleMusicService.getRelatedArtistsById Related artists lookup started. Target artist IDs : {}, View : similar-artist, Limit : {}", id, limit);
-        return client.getRelatedArtistsById(id, limit);
+        return client.getRelatedArtistsById(id, limit, offset);
     }
 
     public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit, String offset) {

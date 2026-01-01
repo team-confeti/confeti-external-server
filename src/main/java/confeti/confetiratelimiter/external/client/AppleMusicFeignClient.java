@@ -56,8 +56,9 @@ public interface AppleMusicFeignClient {
      */
     @GetMapping("/artists/{id}/view/similar-artists")
     Mono<AppleMusicArtistsResponse> getRelatedArtistsById(
-            @PathVariable String id,
-            @RequestParam String limit
+        @PathVariable String id,
+        @RequestParam String limit,
+        @RequestParam(required = false) String offset
     );
 
     /**
