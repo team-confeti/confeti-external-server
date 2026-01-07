@@ -41,9 +41,10 @@ public class AppleMusicController {
     @GetMapping("/artists/{id}/view/similar-artists")
     public Mono<ResponseEntity<?>> getRelatedArtistsById(
             @PathVariable String id,
-            @RequestParam String limit
+            @RequestParam String limit,
+            @RequestParam(required = false) String offset
     ) {
-        return appleMusicFacade.getRelatedArtistsById(id, limit)
+        return appleMusicFacade.getRelatedArtistsById(id, limit, offset)
                 .map(ApiResponseUtil::success);
     }
 

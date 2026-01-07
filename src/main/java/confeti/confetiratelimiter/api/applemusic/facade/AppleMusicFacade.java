@@ -40,8 +40,8 @@ public class AppleMusicFacade {
                 .map(AppleMusicArtistsResponse::new);
     }
 
-    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit) {
-        return appleMusicService.getRelatedArtistsById(id, limit);
+    public Mono<AppleMusicArtistsResponse> getRelatedArtistsById(String id, String limit, String offset) {
+        return appleMusicService.getRelatedArtistsById(id, limit, offset);
     }
 
     public Mono<AppleMusicSongsResponse> getArtistTopSongsById(String id, String limit, String offset) {
